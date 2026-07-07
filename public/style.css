@@ -1,0 +1,1758 @@
+/* ==========================================================================
+   Design System & Variable Declarations
+   ========================================================================== */
+:root {
+  /* Color Palette (HSL Tailored) */
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-surface: rgba(23, 30, 48, 0.65);
+  --bg-surface-hover: rgba(31, 41, 67, 0.8);
+  
+  --border-glow: rgba(59, 130, 246, 0.15);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-focus: #3b82f6;
+
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  --accent-blue: #3b82f6;
+  --accent-indigo: #6366f1;
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  
+  --status-success: #10b981;
+  --status-success-bg: rgba(16, 185, 129, 0.1);
+  --status-failed: #ef4444;
+  --status-failed-bg: rgba(239, 68, 68, 0.1);
+  --status-pending: #f59e0b;
+  --status-pending-bg: rgba(245, 158, 11, 0.1);
+
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Glassmorphic values */
+  --glass-blur: blur(16px);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Base Elements & Reset
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Abstract background gradients for premium visual wow */
+body::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   App Layout
+   ========================================================================== */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.app-header {
+  background-color: rgba(17, 24, 39, 0.8);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-blue);
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.logo-text span {
+  color: var(--accent-blue);
+}
+
+.header-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.nav-tab:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.nav-tab.active {
+  color: var(--text-primary);
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.mail-badge {
+  background-color: var(--status-failed);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  border: 1px solid var(--bg-secondary);
+  animation: pulse 2s infinite;
+}
+
+.mail-badge.hidden {
+  display: none;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: var(--status-success);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--status-success);
+}
+
+.status-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Tab Content Controls
+   ========================================================================== */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* ==========================================================================
+   1. Explore Courses Style
+   ========================================================================== */
+.hero-section {
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
+}
+
+.hero-section h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.75rem;
+  letter-spacing: -0.02em;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+}
+
+.hero-section p {
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.glass-card {
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.08);
+}
+
+.course-card:hover::before {
+  background: var(--accent-gradient);
+}
+
+.course-body {
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.course-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.course-duration {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-blue);
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+
+.course-price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+}
+
+.course-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.course-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.enroll-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.enroll-btn:hover {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.enroll-btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ==========================================================================
+   2. Student Portal Style (Form & Simulation)
+   ========================================================================== */
+.registry-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.form-card, .status-card {
+  padding: 2.25rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.card-subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.selected-course-preview {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.preview-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.selected-course-preview h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.preview-meta {
+  font-size: 0.8rem;
+  color: var(--accent-blue);
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.required {
+  color: var(--status-failed);
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  width: 18px;
+  height: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.input-wrapper input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--border-glow);
+}
+
+.input-wrapper input.invalid {
+  border-color: var(--status-failed);
+}
+
+.input-wrapper input.invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.error-msg {
+  color: var(--status-failed);
+  font-size: 0.8rem;
+  min-height: 1.25rem;
+  margin-top: 0.1rem;
+  display: block;
+}
+
+/* Integrated Payment Box UI */
+.payment-simulator-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.payment-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
+}
+
+.payment-card-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-row input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.flex-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.simulator-controls {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.25rem;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.status-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.status-option-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.status-option-label input {
+  display: none;
+}
+
+.status-success input:checked + span { color: var(--status-success); }
+.status-pending input:checked + span { color: var(--status-pending); }
+.status-failed input:checked + span { color: var(--status-failed); }
+
+.status-success:has(input:checked) {
+  border-color: var(--status-success);
+  background: var(--status-success-bg);
+}
+.status-pending:has(input:checked) {
+  border-color: var(--status-pending);
+  background: var(--status-pending-bg);
+}
+.status-failed:has(input:checked) {
+  border-color: var(--status-failed);
+  background: var(--status-failed-bg);
+}
+
+.submit-btn {
+  background: var(--accent-gradient);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Sidebar Instructions Card */
+.instruction-card {
+  padding: 1.75rem;
+  height: fit-content;
+}
+
+.side-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.instruction-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.instruction-list li {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: var(--accent-blue);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.instruction-list li strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+/* Success View Pane style */
+.success-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.success-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--status-success-bg);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: var(--status-success);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.success-svg {
+  width: 28px;
+  height: 28px;
+}
+
+.success-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.registry-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.success-message-container {
+  background: var(--status-success-bg);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.success-message-container p {
+  color: #a7f3d0;
+  font-size: 0.9rem;
+}
+
+.receipt-details {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+.receipt-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.receipt-row:last-child {
+  margin-bottom: 0;
+}
+
+.receipt-row span {
+  color: var(--text-secondary);
+}
+
+.receipt-row strong {
+  color: var(--text-primary);
+}
+
+.id-code {
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: var(--accent-blue) !important;
+}
+
+.status-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.status-tag-success {
+  background-color: var(--status-success-bg);
+  color: var(--status-success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-tag-neutral {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.primary-action {
+  background: var(--accent-gradient);
+  border: none;
+  color: white;
+}
+
+.primary-action:hover {
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+}
+
+.secondary-action {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.secondary-action:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.reset-flow-btn {
+  display: block;
+  margin: 0 auto;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.reset-flow-btn:hover {
+  color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   3. Admin Dashboard Style
+   ========================================================================== */
+.dashboard-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  margin-top: 1rem;
+}
+
+.dashboard-header-row h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.85rem;
+}
+
+.dashboard-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.refresh-dashboard-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.refresh-dashboard-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.table-card {
+  border-radius: 10px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  background: rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid var(--border-color);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  padding: 1rem 1.25rem;
+}
+
+.admin-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+  font-size: 0.85rem;
+}
+
+.admin-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.student-info-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-name-text {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.student-email-text {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.badge-success { background: var(--status-success-bg); color: var(--status-success); }
+.badge-pending { background: var(--status-pending-bg); color: var(--status-pending); }
+.badge-failed { background: var(--status-failed-bg); color: var(--status-failed); }
+
+.badge-sent { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+.badge-none { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+
+.row-actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.row-action-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 4px;
+  padding: 0.35rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.row-action-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.row-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.empty-table-state {
+  text-align: center;
+  padding: 3rem !important;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   4. Email Sandbox Style
+   ========================================================================== */
+.mail-client-container {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 1.5rem;
+  height: calc(100vh - 250px);
+  min-height: 500px;
+  margin-top: 1rem;
+}
+
+.mail-inbox-sidebar {
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inbox-title-row {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.inbox-title-row h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.inbox-count {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+}
+
+.inbox-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mail-item-row {
+  padding: 1.15rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.mail-item-row::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: transparent;
+}
+
+.mail-item-row:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+.mail-item-row.active {
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.mail-item-row.active::after {
+  background: var(--accent-gradient);
+}
+
+.mail-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.mail-item-sender {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.mail-item-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.mail-item-subject {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent-blue);
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mail-item-snippet {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty-inbox-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-mail-svg {
+  width: 48px;
+  height: 48px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty-inbox-state p {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--text-primary);
+}
+
+.empty-inbox-state span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Mail Details Pane */
+.mail-details-panel {
+  background: var(--bg-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.empty-mail-details-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+}
+
+.details-mail-svg {
+  width: 64px;
+  height: 64px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.active-mail-details {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.mail-header-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.mail-subject {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.mail-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.sender-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.mail-meta-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.mail-meta-text strong {
+  color: var(--text-primary);
+}
+
+.mail-meta-time {
+  position: absolute;
+  right: 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.mail-body-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  line-height: 1.7;
+}
+
+.mail-attachments-section {
+  padding: 1.25rem 1.5rem;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.attachments-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.attachment-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.attachment-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
+  flex-shrink: 0;
+}
+
+.attachment-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+  overflow: hidden;
+}
+
+.attachment-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attachment-size {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.attachment-download-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 4px;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 1rem;
+}
+
+.attachment-download-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.attachment-download-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Footer Style
+   ========================================================================== */
+.app-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background-color: rgba(11, 15, 25, 0.9);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   Toast Notification Styles
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toast {
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  min-width: 300px;
+  max-width: 450px;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast-success {
+  border-left: 4px solid var(--status-success);
+}
+
+.toast-error {
+  border-left: 4px solid var(--status-failed);
+}
+
+.toast-info {
+  border-left: 4px solid var(--accent-blue);
+}
+
+.toast-icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.toast-success .toast-icon { color: var(--status-success); }
+.toast-error .toast-icon { color: var(--status-failed); }
+.toast-info .toast-icon { color: var(--accent-blue); }
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+
+.toast-message {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.toast-close:hover {
+  color: var(--text-primary);
+}
+
+.toast-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==========================================================================
+   Utility Loaders / Spinner
+   ========================================================================== */
+.loading-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--accent-blue);
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(110%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .registry-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .mail-client-container {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .mail-inbox-sidebar {
+    height: 300px;
+  }
+
+  .mail-details-panel {
+    height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .header-nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .nav-tab {
+    flex-shrink: 0;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+  
+  .toast {
+    min-width: 0;
+  }
+
+  .flex-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* ==========================================================================
+   SMTP Configuration Panel Styles
+   ========================================================================== */
+.config-card {
+  padding: 1.75rem;
+}
+
+.config-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  user-select: none;
+}
+
+.config-section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.collapse-arrow {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.config-card.collapsed .collapse-arrow {
+  transform: rotate(-90deg);
+}
+
+.smtp-config-form {
+  margin-top: 1.5rem;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease;
+  max-height: 1200px;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.config-card.collapsed .smtp-config-form {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  pointer-events: none;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.config-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--border-glow);
+}
+
+.config-toggles-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-container input {
+  display: none;
+}
+
+.toggle-slider, .toggle-slider-glow {
+  width: 36px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  position: relative;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.toggle-slider::after, .toggle-slider-glow::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  transition: all 0.25s ease;
+}
+
+.toggle-container input:checked + .toggle-slider {
+  background-color: var(--accent-blue);
+  border-color: transparent;
+}
+
+.toggle-container input:checked + .toggle-slider::after {
+  left: 18px;
+  background-color: white;
+}
+
+.toggle-container input:checked + .toggle-slider-glow {
+  background-color: var(--status-success);
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.toggle-container input:checked + .toggle-slider-glow::after {
+  left: 18px;
+  background-color: white;
+}
+
+.toggle-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.glow-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.config-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.test-email-group {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 450px;
+  width: 100%;
+}
+
+.test-input {
+  flex: 1;
+}
+
+#test-smtp-btn {
+  width: auto;
+  white-space: nowrap;
+  padding: 0 1rem;
+}
+
+#save-smtp-btn {
+  max-width: 250px;
+}
+
